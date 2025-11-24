@@ -14,11 +14,7 @@ import java.util.Observable;
  * - Consistency: Prevents multiple conflicting area structures from existing
  * - Resource efficiency: Building hierarchy is created and maintained only once
  * - Global access point: Any component can access area information through getInstance()
- *
- * Observable feature:
- * - Notifies registered observers when areas are created or modified
- * - Enables reactive updates in UI or other dependent components
- * - Follows the Observer pattern for loose coupling between components
+
  */
 public final class DirectoryAreas extends Observable {
   // Singleton instance - only one DirectoryAreas exists in the application
