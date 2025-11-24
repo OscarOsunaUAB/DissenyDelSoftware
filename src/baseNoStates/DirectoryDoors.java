@@ -2,11 +2,24 @@ package baseNoStates;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Observable;
 
-public final class DirectoryDoors {
-  private static ArrayList<Door> allDoors;
+public final class DirectoryDoors extends Observable {
+  private static DirectoryDoors instance = null;
+  private ArrayList<Door> allDoors;
 
-  public static void makeDoors() {
+  private DirectoryDoors() {
+    allDoors = new ArrayList<>();
+  }
+
+  public static DirectoryDoors getInstance() {
+    if (instance == null) {
+      instance = new DirectoryDoors();
+    }
+    return instance;
+  }
+
+  public void makeDoors() {
     // basement
     Door d1 = new Door("D1"); // exterior, parking
     Door d2 = new Door("D2"); // stairs, parking
@@ -23,9 +36,13 @@ public final class DirectoryDoors {
     Door d9 = new Door("D9"); // corridor, IT
 
     allDoors = new ArrayList<>(Arrays.asList(d1, d2, d3, d4, d5, d6, d7, d8, d9));
+
+    // Notificar a los observadores que las puertas han sido creadas
+    setChanged();
+    notifyObservers("doors_created");
   }
 
-  public static Door findDoorById(String id) {
+  public Door findDoorById(String id) {
     for (Door door : allDoors) {
       if (door.getId().equals(id)) {
         return door;
@@ -35,9 +52,13 @@ public final class DirectoryDoors {
     return null;
   }
 
-  public static ArrayList<Door> getAllDoors() {
+  public ArrayList<Door> getAllDoors() {
     System.out.println(allDoors);
     return allDoors;
   }
 
+  public void notifyDoorChanged(Door door) {
+    setChanged();
+    notifyObservers(door);
+  }
 }

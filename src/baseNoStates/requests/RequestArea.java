@@ -52,7 +52,7 @@ public class RequestArea implements Request {
     }
 
     public void process() {
-        User user = DirectoryUserGroups.findUserByCredential(credential);
+      User user = DirectoryUserGroups.getInstance().findUserByCredential(credential);
         // invalid action: only lock/unlock allowed for area requests
         String canonical = Actions.canonicalize(action);
         if (user == null || canonical == null ||
@@ -65,7 +65,7 @@ public class RequestArea implements Request {
             return;
         }
 
-        Area area = DirectoryAreas.findAreaById(areaId);
+      Area area = DirectoryAreas.getInstance().findAreaById(areaId);
         if (area == null) {
             authorized = false;
             return;
